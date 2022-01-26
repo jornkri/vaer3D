@@ -147,7 +147,7 @@ require([
         quality: 'high',
       },
       weather: {
-        type: 'sunny',
+        type: 'Cloudy',
         cloudCover: 0.8, // autocasts as new CloudyWeather({ cloudCover: 0.4 })
       },
     },
