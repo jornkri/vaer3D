@@ -147,7 +147,7 @@ require([
         quality: 'high',
       },
       weather: {
-        type: 'foggy',
+        type: 'sunny',
         cloudCover: 0.8, // autocasts as new CloudyWeather({ cloudCover: 0.4 })
       },
     },
@@ -162,6 +162,31 @@ require([
 
     // qualityProfile: 'high',
   });
+
+  const weatherDropdown = document.getElementById('weatherDropdown');
+  view.ui.add(weatherDropdown, 'top-right');
+
+  // Listen to changes in the dropdown
+  weatherDropdown.addEventListener('calciteDropdownSelect', () => {
+    // Read the id of the current selected item
+    let selectedWeather = weatherDropdown.selectedItems[0].id;
+    // Get the new weather instance and set it to the weather property of the view
+    view.environment.weather = setWeather(selectedWeather);
+  });
+
+  // Returns instances of the different weather types
+  function setWeather(selectedWeather) {
+    switch (selectedWeather) {
+      case 'Sunny':
+        return { type: 'sunny', cloudCover: 0.8 }; // autocasts as new SunnyWeather({ cloudCover: 0.8 })
+      case 'Cloudy':
+        return { type: 'cloudy', cloudCover: 0.4 }; // autocasts as new CloudyWeather({ cloudCover: 0.4})
+      case 'Rainy':
+        return { type: 'rainy', cloudCover: 0.4 }; // autocasts as new RainyWeather({ cloudCover: 0.4 })
+      case 'Foggy':
+        return { type: 'foggy', fogStrength: 0.6 }; // autocasts as new FoggyWeather({ fogStrength: 0.6 })
+    }
+  }
   scene.when(() => {
     // set this property to display trees, buildings and other
     // 3D objects reflected in the water.
